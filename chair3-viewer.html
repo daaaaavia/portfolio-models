@@ -24,10 +24,18 @@
     touch-action="pan-y"
     tone-mapping="neutral"
     exposure="1"
-    shadow-intensity="1"
-    shadow-softness="0.8"
-    camera-orbit="35deg 75deg auto"
+    shadow-intensity="0"
+    camera-target="0m 0.3m -0.03m"
+    camera-orbit="35deg 72deg 2.4m"
     interaction-prompt="none">
   </model-viewer>
+  <script>
+    // The ground shadow is baked into the model (material "shadow_web"); this sets its strength (0 to 1).
+    const mv = document.querySelector('model-viewer');
+    mv.addEventListener('load', () => {
+      const m = mv.model.materials.find(x => x.name === 'shadow_web');
+      if (m) m.pbrMetallicRoughness.setBaseColorFactor([0, 0, 0, 0.8]);
+    });
+  </script>
 </body>
 </html>
